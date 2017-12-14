@@ -23,6 +23,7 @@ solr使用：
 
 配置solr.home 和solr.log，这样就不需要在web.xml中写死了。
 
+solr_home 中的 索引路径 （core.properties中的data地址，不写默认当前路径， 写了 记得要建索引文件夹）
 
 
 2.修改classes中的log4j.properties 中的solr.log ，这样在tomcat 启动参数 就可以设置solr log了
@@ -37,9 +38,12 @@ solr使用：
 
 
 
+
 二，使用说明
 
 1.mvn clean install 打包，打成的war包 放到tomcat的webapps下 ，增加setenv.sh 文件，执行bin下的脚本。 
+
+（1）tomcat 的端口修改 conf/server.xml 为 端口号 如8081
 
     ./startup.sh
     http://localhost:8081/lsearch/index.html
