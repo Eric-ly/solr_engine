@@ -1210,5 +1210,8 @@
        <str name="paramkey">param value</str>
      </similarity>
     -->
+    <similarity class="com.lybmm.search.core.score.BootSimilarityFactory">
+           <!--<str name="paramkey">param value</str>-->
+    </similarity>
 
 </schema>

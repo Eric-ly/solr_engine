@@ -36,12 +36,13 @@ solr_home 中的 索引路径 （core.properties中的data地址，不写默认�
 
 5.solr的jar包 在maven的pom中进行了配置。不需要像单机中的copy jar包。
 
+6.如果 单独copy war 到tomcat webapp下，
 
 
 
 二，使用说明
 
-1.mvn clean install 打包，打成的war包 放到tomcat的webapps下 ，增加setenv.sh 文件，执行bin下的脚本。 
+1.mvn clean install 打包，打成的war包 放到tomcat的webapps下 ， 在bin下 增加setenv.sh 文件，执行bin下的startup.sh脚本。 
 
 （1）tomcat 的端口修改 conf/server.xml 为 端口号 如8081
 
@@ -50,10 +51,20 @@ solr_home 中的 索引路径 （core.properties中的data地址，不写默认�
 
 2.idea配置tomcat，deployment 中deploy Artifact war 包，启动tomcat后 访问 url可以直接访问。
 
+
 http://localhost:8081/lsearch/index.html
 
 
+三，功能
+1.定制化 评分 ， 屏蔽了solr 默认的DefaultSimilarity 算分的方法，采用自定义的，方便控制
+solr的默认评分机制，会考虑 很多因素 如 关键字在 字段中 出现的次数邓，生成的评分 小数很多， 
+屏蔽后 根据自定义权重评分，如 title中搜索滑雪 命中了加10分，结果都是10分不会出现小数便于控制
+自定义SimilarityFactory 并在schema 中配置 similarity 
 
 三，测试数据
-
-
+本项目下 测试数据 demo_engine 文件，将
+使用post 请求：http://localhost:8080/lsearch/demo_engine/update/json?commit=true
+        headers     Content-Type:application/json
+        body 中上传该 文件，就可以o       s
+可以使用chronme的工具 postman，body选binary 上传测试数据文件。
+示例 url:http://localhost:8080/lsearch/demo_engine/select?fl=score,search_title,id&q=search_title:(滑雪)^10
